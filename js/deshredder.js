@@ -122,5 +122,3 @@ Section = function (left, right, data) {
 		this.data = [data];
 	}
 }
-
-var DS = new DeShredder('TokyoPanoramaShredded.png', 100);
