@@ -1,0 +1,4 @@
+Only tested on the sample image provided by Instagram as part of the Challenge at 
+http://instagram-engineering.tumblr.com/post/12651721845/instagram-engineering-challenge-the-unshredder.
+
+Image needs to be kept locally in order to satisfy the same-origin restrictions in Canvas getImageData.
