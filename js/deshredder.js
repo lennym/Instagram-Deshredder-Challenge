@@ -1,8 +1,8 @@
-DeShredder = function (url, threshold) {
+DeShredder = function (img, threshold) {
 	var self = this;
 	this.threshold = threshold || 100;
 	var input = new Image();
-	input.src = url;
+	input.src = document.getElementById(img).src;
 	input.onload = function () {
 		self.prepareCanvas(this);
 		self.solve();
