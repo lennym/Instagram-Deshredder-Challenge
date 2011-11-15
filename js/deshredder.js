@@ -36,6 +36,13 @@ DeShredder.prototype = {
 		}
 		return stripSize;
 	},
+	getSections: function () {
+		this.sections = [];
+		stripSize = this.getStripSize();
+		for (var i = 0; i < Math.ceil(this.width/stripSize); i++) {
+			this.sections[i] = new Section(i*stripSize, (i+1)*stripSize - 1, this.context.getImageData(i*stripSize, 0, stripSize, this.height));
+		}
+	},
 	tryStripSize: function (diffs, mean, width) {
 		for (var i = 1; i < this.width/width; i++) {
 			if (diffs[i * width] < mean) {
@@ -43,13 +50,6 @@ DeShredder.prototype = {
 			}
 		}
 		return width;
-	},
-	getSections: function () {
-		this.sections = [];
-		stripSize = this.getStripSize();
-		for (var i = 0; i < Math.ceil(this.width/stripSize); i++) {
-			this.sections[i] = new Section(i*stripSize, (i+1)*stripSize - 1, this.context.getImageData(i*stripSize, 0, stripSize, this.height));
-		}
 	},
 	diff: function (a, b) {
 		if (typeof this.cache[a + '-' + b] !== 'undefined') {
@@ -106,10 +106,14 @@ DeShredder.prototype = {
 		return a;
 	},
 	render: function () {
-		var i, section = this.sections[0].data, imageData;
-		for (var i = 0; i < section.length; i++) {
-			imageData = section[i];
-			this.context.putImageData(imageData, i * imageData.width, 0);
+		var i, section = this.sections[0].data, imageData, self = this;
+		for (i = 0; i < section.length; i++) {
+			(function (j) {
+			var imageData = section[j];
+			setTimeout(function () {
+				self.context.putImageData(imageData, j * imageData.width, 0);
+			}, j * 100);
+			})(i);
 		}
 		document.body.appendChild(this.output);
 	}
