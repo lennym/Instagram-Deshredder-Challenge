@@ -1,0 +1,9 @@
+Only tested on the sample image provided by Instagram as part of the Challenge at 
+http://instagram-engineering.tumblr.com/post/12651721845/instagram-engineering-challenge-the-unshredder.
+
+Image needs to be kept locally in order to satisfy the same-origin restrictions in Canvas getImageData.
+
+Columns of pixels are compared fairly crudely by counting the number of adjacent pixels which differ by 
+more than a given Euclidean distance (technically the square of the Euclidean distance). This given value
+is provided as a parameter when constructing the deshredder and defaults to 100 (which worked well enough
+for the test image). It might need some tinkering for other images. Who knows?
