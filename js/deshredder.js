@@ -108,12 +108,8 @@ DeShredder.prototype = {
 	render: function () {
 		var i, section = this.sections[0].data, imageData, self = this;
 		for (i = 0; i < section.length; i++) {
-			(function (j) {
-			var imageData = section[j];
-			setTimeout(function () {
-				self.context.putImageData(imageData, j * imageData.width, 0);
-			}, j * 100);
-			})(i);
+			var imageData = section[i];
+			self.context.putImageData(imageData, i * imageData.width, 0);
 		}
 		document.body.appendChild(this.output);
 	}
