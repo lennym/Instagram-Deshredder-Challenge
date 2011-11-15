@@ -10,7 +10,7 @@ DeShredder = function (url, threshold) {
 }
 DeShredder.prototype = {
 	cache: {},
-	prepareCanvas: function (img, width, height) {
+	prepareCanvas: function (img) {
 		var canvas = document.createElement('canvas');
 		this.width = canvas.width = img.width;
 		this.height = canvas.height = img.height;
@@ -36,13 +36,6 @@ DeShredder.prototype = {
 		}
 		return stripSize;
 	},
-	getSections: function () {
-		this.sections = [];
-		stripSize = this.getStripSize();
-		for (var i = 0; i < Math.ceil(this.width/stripSize); i++) {
-			this.sections[i] = new Section(i*stripSize, (i+1)*stripSize - 1, this.context.getImageData(i*stripSize, 0, stripSize, this.height));
-		}
-	},
 	tryStripSize: function (diffs, mean, width) {
 		for (var i = 1; i < this.width/width; i++) {
 			if (diffs[i * width] < mean) {
@@ -50,6 +43,13 @@ DeShredder.prototype = {
 			}
 		}
 		return width;
+	},
+	getSections: function () {
+		this.sections = [];
+		stripSize = this.getStripSize();
+		for (var i = 0; i < Math.ceil(this.width/stripSize); i++) {
+			this.sections[i] = new Section(i*stripSize, (i+1)*stripSize - 1, this.context.getImageData(i*stripSize, 0, stripSize, this.height));
+		}
 	},
 	diff: function (a, b) {
 		if (typeof this.cache[a + '-' + b] !== 'undefined') {
